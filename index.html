@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Search Engine</title>
+    <link rel="stylesheet" type="text/css" href="style.css"> <!-- Correctly link CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" 
+    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+       /* CSS styles optimized for the project */
+
+/* Importing Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/* Base styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Variable definitions */
+:root {
+    /* Colors */ 
+    --white-color: #ffffff;
+    --orange-color: #f66335;
+    --black-color: #000000;
+    --background-color: linear-gradient(to top left, #b156d9, #213780);
+    --grey-color: #e4dcdc;
+}
+
+/* Container styling */
+.container {
+    width: 100%;
+    min-height: 100vh;
+    background: var(--background-color);
+    padding-bottom: 1rem;
+}
+
+/* Header styling */
+header {
+    padding: 2rem 0;
+    margin: 0 auto;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.5); /* Subtle background for header */
+    border-bottom: 2px solid var(--orange-color);
+}
+
+/* Logo styling */
+.logo {
+    width: 20rem;
+    height: auto;
+}
+
+.logo img {
+    width: 100px;
+    height: auto;
+    
+}
+
+/* Heading styling */
+h1 {
+    color: var(--white-color);
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 2px solid var(--orange-color);
+    text-transform: uppercase;
+    font-size: 2rem; /* Larger font size for emphasis */
+}
+
+/* Prompt box styling */
+.prompt_box {
+    margin: 2rem auto;
+    width: 80%;
+    max-width: 50rem;
+}
+
+/* Form styling */
+form {
+    width: 100%;
+    background-color: var(--grey-color);
+    display: flex;
+    align-items: center;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Input field styling */
+form input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--black-color);
+    font-size: 1rem;
+    padding: 0 1rem;
+}
+
+/* Placeholder text styling */
+form input::placeholder {
+    color: var(--black-color);
+}
+
+/* Select boxes styling */
+form select {
+    border: none;
+    height: 44px;
+    background: none;
+    font-size: 1rem;
+    margin: 0 0.5rem;
+    padding: 0 1rem;
+    border-radius: 0.5rem;
+}
+
+/* Generate button styling */
+form button {
+    padding: 0 1rem;
+    height: 100%;
+    background: var(--orange-color);
+    color: var(--white-color);
+    font-size: 1rem;
+    border: none;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s; /* Smooth transition */
+}
+
+/* Hover effect for Generate button */
+form button:hover {
+    background: var(--white-color);
+    color: var(--orange-color);
+    font-weight: bold;
+}
+
+/* Hero section styling */
+.hero_section {
+    padding: 2rem 1rem;
+}
+
+/* Additional styling */
+h3 {
+    color: var(--white-color);
+    padding: 2rem;
+    text-align: center;
+    font-size: 1.5rem; /* Adjusted font size */
+}
+
+#image_result {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 3rem auto;
+    max-width: 1200px;
+    justify-content: center;
+}
+
+/* Image box styling */
+#image_result .img_box {
+    width: 25rem;
+    aspect-ratio: 1 / 1;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--grey-color);
+    background-color: var(--grey-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    position: relative;
+}
+
+/* Image styling */
+#image_result .img_box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Loading effect styling */
+#image_result .img_box.loading img {
+    width: 5rem;
+    height: 5rem;
+}
+
+/* Download button styling */
+#image_result .img_box .download-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--orange-color);
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+/* Show download button on hover */
+#image_result .img_box:hover .download-btn {
+    display: flex;
+}
+
+/* Download button icon styling */
+#image_result .img_box .download-btn i {
+    color: var(--white-color);
+}
+
+    </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo"><img src="C:\Users\bhark\OneDrive\Desktop\genim trial codes\images\logo.jpg" alt="Logo"></div>
+      <div class="heding"><h1>AI Image Generator</h1></div>      
+    </header>
+    <h3>Convert Your Text Into An AI-Generated Images </h3>
+    <div class="prompt_box">
+      <form id="prompt_bar" action="/generate" method="post" enctype="multipart/form-data">
+        <input type="text" id="prompt_text" name="prompt" placeholder="Provide a prompt for your image" autocomplete="off" required>
+        <select name="quantity" class="img_quantity">
+          <option value="1" selected>1 Image</option>
+          <option value="2">2 Images</option>
+          <option value="3">3 Images</option>
+          <option value="4">4 Images</option>
+          <option value="5">5 Images</option>
+        </select>
+        <select name="size" class="img_size">
+          <option value="256x256">Size: 256x256</option>
+          <option value="512x512">Size: 512x512</option>
+          <option value="1024x1024">Size: 1024x1024</option>
+        </select>
+        <button type="submit">Generate</button>
+      </form>
+    </div>
+    <div class="hero_section">
+       <div id="image_result">
+        <!-- Generated images will be displayed here -->
+        <div class="img_box">
+          <img src="C:\Users\bhark\OneDrive\Desktop\genim trial codes\images\image6.jpeg" alt="Generated Image">
+        </div>
+       </div>
+    </div>
+  </div>
+  <script src="C:\Users\bhark\OneDrive\Desktop\genim trial codes\script.js"></script> <!-- Correctly link JS -->
+</body>   
+</html>
